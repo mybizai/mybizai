@@ -11,7 +11,7 @@ export default function HomePage() {
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#003366] rounded-lg flex items-center justify-center">
               <Bot className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-slate-900">MyBizAI</span>
@@ -29,7 +29,9 @@ export default function HomePage() {
             <Button variant="outline" size="sm">
               Sign In
             </Button>
-            <Button size="sm">Get Started</Button>
+            <Button size="sm" className="bg-[#FF6600] hover:bg-[#E55A00] text-white">
+              Get Started
+            </Button>
           </nav>
         </div>
       </header>
@@ -43,18 +45,22 @@ export default function HomePage() {
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 text-balance">
             Create, Automate, Thrive with{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">MyBizAI</span>
+            <span className="bg-gradient-to-r from-[#003366] to-[#FF6600] bg-clip-text text-transparent">MyBizAI</span>
           </h1>
           <p className="text-xl text-slate-600 mb-8 text-pretty max-w-2xl mx-auto">
             Empowering entrepreneurs with a fully autonomous business ecosystem that evolves and grows, enabling
             hands-free management and maximized income generation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8">
+            <Button size="lg" className="text-lg px-8 bg-[#FF6600] hover:bg-[#E55A00] text-white">
               Start Your AI Business
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 bg-transparent">
+            <Button
+              variant="outline"
+              size="lg"
+              className="text-lg px-8 border-[#003366] text-[#003366] hover:bg-[#003366] hover:text-white bg-transparent"
+            >
               Watch Demo
             </Button>
           </div>
@@ -74,8 +80,8 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <Bot className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-[#003366]/10 rounded-lg flex items-center justify-center mb-4">
+                  <Bot className="w-6 h-6 text-[#003366]" />
                 </div>
                 <CardTitle>Innovative AI Technology</CardTitle>
                 <CardDescription>
@@ -86,8 +92,8 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-[#FF6600]/10 rounded-lg flex items-center justify-center mb-4">
+                  <Zap className="w-6 h-6 text-[#FF6600]" />
                 </div>
                 <CardTitle>Autonomous Management</CardTitle>
                 <CardDescription>
@@ -98,8 +104,8 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <TrendingUp className="w-6 h-6 text-purple-600" />
+                <div className="w-12 h-12 bg-[#003366]/10 rounded-lg flex items-center justify-center mb-4">
+                  <TrendingUp className="w-6 h-6 text-[#003366]" />
                 </div>
                 <CardTitle>Scalable Solutions</CardTitle>
                 <CardDescription>
@@ -110,8 +116,8 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-orange-600" />
+                <div className="w-12 h-12 bg-[#FF6600]/10 rounded-lg flex items-center justify-center mb-4">
+                  <Shield className="w-6 h-6 text-[#FF6600]" />
                 </div>
                 <CardTitle>Efficient Processes</CardTitle>
                 <CardDescription>
@@ -122,8 +128,8 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-indigo-600" />
+                <div className="w-12 h-12 bg-[#003366]/10 rounded-lg flex items-center justify-center mb-4">
+                  <Users className="w-6 h-6 text-[#003366]" />
                 </div>
                 <CardTitle>Market Intelligence</CardTitle>
                 <CardDescription>
@@ -134,8 +140,8 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <Sparkles className="w-6 h-6 text-red-600" />
+                <div className="w-12 h-12 bg-[#FF6600]/10 rounded-lg flex items-center justify-center mb-4">
+                  <Sparkles className="w-6 h-6 text-[#FF6600]" />
                 </div>
                 <CardTitle>Revenue Optimization</CardTitle>
                 <CardDescription>
@@ -148,13 +154,13 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-indigo-600">
+      <section className="py-20 px-4 bg-gradient-to-r from-[#003366] to-[#FF6600]">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Transform Your Business?</h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Join thousands of entrepreneurs who have already automated their success with MyBizAI
           </p>
-          <Button size="lg" variant="secondary" className="text-lg px-8">
+          <Button size="lg" variant="secondary" className="text-lg px-8 bg-white text-[#003366] hover:bg-gray-100">
             Start Your Free Trial
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
@@ -167,7 +173,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-[#003366] to-[#FF6600] rounded-lg flex items-center justify-center">
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold text-white">MyBizAI</span>
