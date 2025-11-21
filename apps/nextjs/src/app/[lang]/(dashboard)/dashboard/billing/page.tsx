@@ -17,18 +17,21 @@ export const metadata = {
   description: "Manage billing and your subscription plan.",
 };
 
+export const dynamic = 'force-dynamic';
+
 interface Subscription {
   plan: string | null;
   endsAt: Date | null;
 }
 
 export default async function BillingPage({
-  params: { lang },
+  params,
 }: {
-  params: {
+  params: Promise<{
     lang: Locale;
-  };
+  }>;
 }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   return (
     <DashboardShell

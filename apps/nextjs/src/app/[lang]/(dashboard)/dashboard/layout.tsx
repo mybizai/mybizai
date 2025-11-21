@@ -4,7 +4,7 @@ import { getCurrentUser } from "@saasfly/auth";
 
 import { LocaleChange } from "~/components/locale-change";
 import { MainNav } from "~/components/main-nav";
-import { DashboardNav } from "~/components/nav";
+import { DashboardLayoutClient } from "~/components/dashboard-layout-client";
 import { SiteFooter } from "~/components/site-footer";
 import { UserAccountNav } from "~/components/user-account-nav";
 import { i18n, type Locale } from "~/config/i18n-config";
@@ -24,13 +24,19 @@ export function generateStaticParams() {
 
 export default async function DashboardLayout({
   children,
-  params: { lang },
-}: DashboardLayoutProps) {
-  const user = await getCurrentUser();
+  params,
+}: {
+  children?: React.ReactNode;
+  params: Promise<{
+    lang: Locale;
+  }>;
+}) {
+  const { lang } = await params;
+  // const user = await getCurrentUser();
   const dict = await getDictionary(lang);
-  if (!user) {
-    return notFound();
-  }
+  // if (!user) {
+  //   return notFound();
+  // }
   const dashboardConfig = await getDashboardConfig({ params: { lang } });
   return (
     <div className="flex min-h-screen flex-col space-y-6">
@@ -44,9 +50,9 @@ export default async function DashboardLayout({
             <LocaleChange url={"/dashboard"} />
             <UserAccountNav
               user={{
-                name: user.name,
-                image: user.image,
-                email: user.email,
+                name: "Demo User", // user.name,
+                image: "", // user.image,
+                email: "demo@mybizai.com", // user.email,
               }}
               params={{ lang: `${lang}` }}
               dict={dict.dropdown}
@@ -54,17 +60,12 @@ export default async function DashboardLayout({
           </div>
         </div>
       </header>
-      <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
-        <aside className="hidden w-[200px] flex-col md:flex">
-          <DashboardNav
-            items={dashboardConfig.sidebarNav}
-            params={{ lang: `${lang}` }}
-          />
-        </aside>
-        <main className="flex w-full flex-1 flex-col overflow-hidden">
-          {children}
-        </main>
-      </div>
+      <DashboardLayoutClient
+        sidebarItems={dashboardConfig.sidebarNav}
+        params={{ lang: `${lang}` }}
+      >
+        {children}
+      </DashboardLayoutClient>
       <SiteFooter
         className="border-t border-border"
         params={{ lang: `${lang}` }}

@@ -12,13 +12,16 @@ export const metadata = {
   description: "Create an account to get started.",
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function RegisterPage({
-  params: { lang },
+  params,
 }: {
-  params: {
+  params: Promise<{
     lang: Locale;
-  };
+  }>;
 }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
 
   return (

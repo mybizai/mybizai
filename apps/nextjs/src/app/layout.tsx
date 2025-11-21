@@ -51,10 +51,10 @@ export const metadata = {
   ],
   authors: [
     {
-      name: "saasfly",
+      name: "mybizai",
     },
   ],
-  creator: "Saasfly",
+  creator: "MyBizAI",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -68,7 +68,7 @@ export const metadata = {
     // shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  metadataBase: new URL("https://show.saasfly.io/"),
+  metadataBase: new URL("https://mybizai.com"),
   // manifest: `${siteConfig.url}/site.webmanifest`,
 };
 

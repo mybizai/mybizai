@@ -32,6 +32,7 @@
     "price_features": "생산 환경을 위한 경제적 효율성.",
     "main_nav_features": "특징",
     "main_nav_pricing": "가격",
+    "main_nav_showcase": "쇼케이스",
     "main_nav_products": "제품",
     "main_nav_documentation": "문서",
     "main_nav_blog": "블로그",
@@ -65,6 +66,13 @@
       "title": "스폰서 여러분의 사랑을 받고 있습니다",
       "donate": "저희에게 커피 한 잔 사주세요, 당신의 브랜드는 바로 여기"
     },
+    "mock_showcase": {
+      "title": "MyBizAI 화면을 미리 경험하세요",
+      "description": "백엔드가 준비되기 전에 온보딩, 협업, 청구, 개인화 흐름을 고해상도 목업으로 살펴보세요.",
+      "view_all": "전체 갤러리 보기",
+      "badge": "제품 프리뷰 라이브러리",
+      "back_to_home": "마케팅 페이지로 돌아가기"
+    },
     "video": {
       "first_text": "비디오를 보고",
       "second_text1": "",
@@ -73,7 +81,7 @@
     },
     "people_comment": {
       "title": "사람들의 반응을 살펴보세요",
-      "desc": "저희 말만 믿지 마세요. 실제 사용자들이 Saasfly에 대해 어떻게 말하는지 확인해 보세요."
+      "desc": "저희 말만 믿지 마세요. 실제 사용자들이 MyBizAI에 대해 어떻게 말하는지 확인해 보세요."
     }
   },
   "login": {
@@ -89,7 +97,7 @@
     "": ""
   },
   "common": {
-    "copyright": "저작권 © ${currentYear} Nextify 주식회사. 모든 권리 보유.",
+    "copyright": "저작권 © ${currentYear} MyBizAI. 모든 권리 보유.",
     "dashboard": {
       "main_nav_documentation": "문서",
       "main_nav_support": "지원",

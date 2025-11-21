@@ -17,6 +17,10 @@ export const isPublicRoute = createRouteMatcher([
   new RegExp("/(\\w{2}/)?docs(.*)"),
   new RegExp("/(\\w{2}/)?blog(.*)"),
   new RegExp("/(\\w{2}/)?pricing(.*)"),
+  new RegExp("/(\\w{2}/)?experiences(.*)"),
+  new RegExp("/(\\w{2}/)?dashboard(.*)"),
+  new RegExp("/(\\w{2}/)?m/(.*)"), // Mock pages
+  new RegExp("/(\\w{2}/)?$"),
   new RegExp("^/\\w{2}$"), // root with locale
 ])
 
@@ -73,7 +77,7 @@ export const middleware = clerkMiddleware(async (auth, req: NextRequest) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   if (isPublicRoute(req)) {
-    return null;
+    return NextResponse.next(); // Allow public routes without auth
   }
 
   const { userId, sessionClaims } = await auth()

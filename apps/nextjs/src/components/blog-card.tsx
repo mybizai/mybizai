@@ -41,7 +41,7 @@ export function XBlogArticle() {
 
 const blogContent = {
   slug: "Making-Sense-of-React-Server-Components",
-  author: "Nextify",
+  author: "MyBizAI",
   date: "26th March, 2024",
   title: "Making Sense of React Server Components",
   description:

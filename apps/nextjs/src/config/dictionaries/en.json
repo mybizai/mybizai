@@ -19,9 +19,9 @@
     "": ""
   },
   "marketing": {
-    "introducing": "Introducing Saasfly",
-    "title": "Ship your apps to the world easier with ",
-    "sub_title": "An easy-to-use and enterprise-grade Next.js boilerplate. Your complete All-in-One solution for building SaaS services.",
+    "introducing": "Introducing MyBizAI",
+    "title": "Empowering entrepreneurs with a fully autonomous business ecosystem.",
+    "sub_title": "Create, Automate, Thrive with MyBizAI. Your complete All-in-One solution for building and managing businesses hands-free.",
     "get_started": "Get Started",
     "view_on_github": "View on GitHub",
     "explore_product": "Explore Product",
@@ -32,6 +32,7 @@
     "price_features": "Economically efficient for production environments.",
     "main_nav_features": "Features",
     "main_nav_pricing": "Pricing",
+    "main_nav_showcase": "Showcase",
     "main_nav_products": "Products",
     "main_nav_blog": "Blog",
     "main_nav_documentation": "Documentation",
@@ -39,9 +40,9 @@
     "signup": "Sign up",
     "": "",
     "contributors": {
-      "contributors_desc": "contributors made Saasfly stronger",
-      "developers_first": "Help more than ",
-      "developers_second": " developers"
+      "contributors_desc": "screens capture the full MyBizAI experience",
+      "developers_first": "Walk through ",
+      "developers_second": " product-grade mock journeys"
     },
     "right_side": {
       "deploy_on_vercel_title": "Deploy on Vercel",
@@ -62,8 +63,15 @@
       "nextauth_desc": "Empower your app with secure and seamless authentication, creating a frictionless login experience."
     },
     "sponsor": {
-      "title": "Loved by our Sponsors",
-      "donate": "Buy us a coffee, Your Brand here"
+      "title": "Powered by Innovation",
+      "donate": "Join the revolution"
+    },
+    "mock_showcase": {
+      "title": "Experience MyBizAI in action",
+      "description": "Browse our full library of high-fidelity product mocks to explore onboarding, collaboration, billing, and personalization flows before the backend is live.",
+      "view_all": "Browse full gallery",
+      "badge": "Product preview library",
+      "back_to_home": "Back to marketing site"
     },
     "video": {
       "first_text": "Watch a Video, then",
@@ -73,7 +81,7 @@
     },
     "people_comment": {
       "title": "What People Are Saying",
-      "desc": "Don’t just take our word for it. Here’s what real people are saying about Saasfly."
+      "desc": "Don’t just take our word for it. Here’s what real people are saying about MyBizAI."
     }
   },
   "login": {
@@ -85,11 +93,11 @@
     "signin_others": "Or continue with",
     "signup": "Sign up",
     "privacy": "only your email and profile picture will be stored.",
-    "signup_github": "Sign Up with Github",
+    "signup_github": "Sign Up",
     "": ""
   },
   "common": {
-    "copyright": "Copyright © ${currentYear} Nextify Limited. All rights reserved.",
+    "copyright": "Copyright © ${currentYear} MyBizAI. All rights reserved.",
     "dashboard": {
       "main_nav_documentation": "Documentation",
       "main_nav_support": "Support",

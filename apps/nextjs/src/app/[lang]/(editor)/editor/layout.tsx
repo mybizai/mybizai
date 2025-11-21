@@ -17,10 +17,16 @@ interface EditLayoutProps {
   };
 }
 
-export default async function DashboardLayout({
+export default async function EditorLayout({
   children,
-  params: { lang },
-}: EditLayoutProps) {
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{
+    lang: Locale;
+  }>;
+}) {
+  const { lang } = await params;
   const user = await getCurrentUser();
   const dict = await getDictionary(lang);
 

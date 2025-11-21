@@ -1,11 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getDictionary } from "~/lib/get-dictionary";
-
-import { CodeCopy } from "~/components/code-copy";
-import { Comments } from "~/components/comments";
-import { FeaturesGrid } from "~/components/features-grid";
-import { RightsideMarketing } from "~/components/rightside-marketing";
 
 import { AnimatedTooltip } from "@saasfly/ui/animated-tooltip";
 import { BackgroundLines } from "@saasfly/ui/background-lines";
@@ -13,21 +7,33 @@ import { Button } from "@saasfly/ui/button";
 import { ColourfulText } from "@saasfly/ui/colorful-text";
 import * as Icons from "@saasfly/ui/icons";
 
+import { CodeCopy } from "~/components/code-copy";
+import { Comments } from "~/components/comments";
+import { FeaturesGrid } from "~/components/features-grid";
+import { MockGalleryClient } from "~/components/mock-gallery.client";
+import { RightsideMarketing } from "~/components/rightside-marketing";
+import { VideoScroll } from "~/components/video-scroll";
 import type { Locale } from "~/config/i18n-config";
-import {VideoScroll} from "~/components/video-scroll";
+import { getDictionary } from "~/lib/get-dictionary";
+import { getMockAssets } from "~/lib/mock-library";
+import {
+  CATEGORY_TAGLINES,
+  FEATURED_JOURNEY_ORDER,
+  MOCK_ANNOTATIONS,
+} from "~/data/mock-showcase";
 
 const people = [
   {
     id: 1,
     name: "tianzx",
-    designation: "CEO at Nextify",
+    designation: "CEO at MyBizAI",
     image: "https://avatars.githubusercontent.com/u/10096899",
-    link: "https://x.com/nextify2024",
+    link: "https://mybizai.com",
   },
   {
     id: 2,
     name: "jackc3",
-    designation: "Co-founder at Nextify",
+    designation: "Co-founder at MyBizAI",
     image: "https://avatars.githubusercontent.com/u/10334353",
     link: "https://x.com/BingxunYao",
   },
@@ -58,80 +64,86 @@ const people = [
 ];
 
 export default async function IndexPage({
-  params: { lang },
+  params,
 }: {
-  params: {
+  params: Promise<{
     lang: Locale;
-  };
+  }>;
 }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const mockAssets = await getMockAssets();
+  const assetById = new Map(mockAssets.map((asset) => [asset.id, asset] as const));
+  const highlightedMocks = mockAssets.slice(0, 6);
+  const journeyOrder = FEATURED_JOURNEY_ORDER.filter((id) =>
+    mockAssets.some((asset) => asset.id === id),
+  );
 
   return (
     <>
-      <section className="container">
-        <div className="grid grid-cols-1 gap-10 xl:grid-cols-2">
-          <div className="flex flex-col items-start h-full">
-            <BackgroundLines className="h-full">
-              <div className="flex flex-col pt-4 md:pt-36 lg:pt-36 xl:pt-36">
-                <div className="mt-20">
-                  <div
-                    className="mb-6 max-w-4xl text-left text-4xl font-semibold dark:text-zinc-100 md:text-5xl xl:text-5xl md:leading-[4rem] xl:leading-[4rem]">
-                    {dict.marketing.title || "Ship your apps to the world easier with "}
-                    <ColourfulText text="Saasfly"/>
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  <span className="text-neutral-500 dark:text-neutral-400 sm:text-lg">
-                    {dict.marketing.sub_title || "Your complete All-in-One solution for building SaaS services."}
-                  </span>
-                </div>
-
-                <div
-                  className="mb-4 mt-6 flex w-full flex-col justify-center space-y-4 sm:flex-row sm:justify-start sm:space-x-8 sm:space-y-0 z-10">
-                  <Link href="https://github.com/saasfly/saasfly" target="_blank">
-                    <Button
-                      className="bg-blue-600 hover:bg-blue-500 text-white rounded-full text-lg px-6 h-12 font-medium">
-                      {dict.marketing.get_started}
-                      <Icons.ArrowRight className="h-5 w-5"/>
-                    </Button>
-                  </Link>
-
-                  <CodeCopy/>
-                </div>
-
-                <div className="flex xl:flex-row flex-col items-center justify-start mt-4 w-full">
-                  <div className="flex">
-                    <AnimatedTooltip items={people}/>
-                  </div>
-                  <div className="flex flex-col items-center justify-start ml-8">
-                    <div className="w-[340px]">
-                      <span className="font-semibold">9 </span>
-                      <span className="text-neutral-500 dark:text-neutral-400">{dict.marketing.contributors.contributors_desc}</span>
-                    </div>
-                    <div className="w-[340px]">
-                      <span
-                        className="text-neutral-500 dark:text-neutral-400">{dict.marketing.contributors.developers_first}</span>
-                      <ColourfulText text="2000"/>
-                      <span
-                        className="text-neutral-500 dark:text-neutral-400">{dict.marketing.contributors.developers_second}</span>
-                    </div>
-                  </div>
-                </div>
+      <section className="relative w-full overflow-hidden bg-background">
+        <BackgroundLines className="flex flex-col items-center justify-center min-h-screen w-full">
+          <div className="container relative z-10 flex flex-col items-center justify-center text-center">
+            <div className="space-y-6 max-w-4xl">
+              <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-r from-mybiz-purple via-mybiz-green to-mybiz-purple animate-gradient-x">
+                {dict.marketing.title}
+              </h1>
+              <p className="text-xl text-muted-foreground sm:text-2xl md:text-3xl max-w-2xl mx-auto">
+                {dict.marketing.sub_title}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <Link href={`/${lang}/login-clerk`}>
+                  <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-6 bg-mybiz-purple hover:bg-mybiz-purple/90">
+                    {dict.marketing.get_started}
+                    <Icons.ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="#" target="_blank" rel="noreferrer">
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-8 py-6 border-mybiz-purple/20 hover:bg-mybiz-purple/10">
+                    <Icons.GitHub className="mr-2 h-5 w-5" />
+                    GitHub
+                  </Button>
+                </Link>
               </div>
-            </BackgroundLines>
-          </div>
-
-          <div className="hidden h-full w-full xl:block bg-background">
-            <div className="flex flex-col pt-44">
-              <RightsideMarketing dict={dict.marketing.right_side}/>
             </div>
           </div>
-        </div>
+        </BackgroundLines>
       </section>
 
-      <section className="container mt-8 md:mt-[-180px] xl:mt-[-180px]">
-        <FeaturesGrid dict={dict.marketing.features_grid}/>
+      {highlightedMocks.length ? (
+        <section id="showcase" className="container mt-20">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="space-y-3">
+              <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+                {dict.marketing.mock_showcase.title}
+              </h2>
+              <p className="max-w-2xl text-base text-muted-foreground">
+                {dict.marketing.mock_showcase.description}
+              </p>
+            </div>
+            <Button asChild variant="outline">
+              <Link href={`/${lang}/experiences`}>
+                {dict.marketing.mock_showcase.view_all}
+              </Link>
+            </Button>
+          </div>
+          <div className="mt-8">
+            <MockGalleryClient
+              entries={highlightedMocks}
+              enableFilters={false}
+              showCodeLinks={false}
+              locale={lang}
+              taglines={CATEGORY_TAGLINES}
+            />
+          </div>
+        </section>
+      ) : null}
+
+      <section
+        id="features"
+        className="container mt-8 md:mt-[-180px] xl:mt-[-180px]"
+      >
+        <FeaturesGrid dict={dict.marketing.features_grid} />
       </section>
 
       <section className="container pt-24">
@@ -139,15 +151,15 @@ export default async function IndexPage({
           <div className="text-lg text-neutral-500 dark:text-neutral-400">{dict.marketing.sponsor.title}</div>
           <div className="mt-4 flex items-center gap-4">
             <Link href="https://go.clerk.com/uKDp7Au" target="_blank">
-              <Image src="/images/clerk.png" width="48" height="48" alt="twillot"/>
+              <Image src="/images/clerk.png" width="48" height="48" alt="twillot" />
             </Link>
             <Link href="https://www.twillot.com/" target="_blank">
-              <Image src="https://www.twillot.com/logo-128.png" width="48" height="48" alt="twillot"/>
+              <Image src="https://www.twillot.com/logo-128.png" width="48" height="48" alt="twillot" />
             </Link>
             <Link href="https://www.setupyourpay.com/" target="_blank">
               <Image src="https://www.setupyourpay.com/logo.png" width="48" height="48" alt="setupyourpay" />
             </Link>
-            <Link href="https://opencollective.com/saasfly" target="_blank">
+            <Link href="#" target="_blank">
               <div className="flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:bg-accent dark:hover:bg-neutral-800/30">
                 <Icons.Heart className="w-5 h-5 fill-pink-600 text-pink-600 dark:fill-pink-700 dark:text-pink-700" />
                 <span className="text-sm font-medium text-neutral-500 dark:text-neutral-200">{dict.marketing.sponsor.donate || ''}</span>
@@ -158,7 +170,7 @@ export default async function IndexPage({
       </section>
 
       <section className="container pt-8">
-        <VideoScroll dict={dict.marketing.video}/>
+        <VideoScroll dict={dict.marketing.video} />
       </section>
 
       <section className="w-full px-8 pt-10 sm:px-0 sm:pt-24 md:px-0 md:pt-24 xl:px-0 xl:pt-24">
@@ -173,7 +185,7 @@ export default async function IndexPage({
           </div>
 
           <div className="w-full overflow-x-hidden">
-            <Comments/>
+            <Comments />
           </div>
         </div>
       </section>

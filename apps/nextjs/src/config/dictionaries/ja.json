@@ -32,6 +32,7 @@
     "price_features": "生産環境に対する経済的効率性。",
     "main_nav_features": "特徴",
     "main_nav_pricing": "価格",
+    "main_nav_showcase": "ショーケース",
     "main_nav_products": "製品",
     "main_nav_blog": "ブログ",
     "main_nav_documentation": "ドキュメンテーション",
@@ -65,6 +66,13 @@
       "title": "スポンサーの皆様に愛されています",
       "donate": "コーヒーブレイクのお供に、あなたのブランドを"
     },
+    "mock_showcase": {
+      "title": "MyBizAI の画面を体験する",
+      "description": "バックエンドが完成する前に、高精度なモックでオンボーディング、コラボレーション、課金、パーソナライズのフローを確認できます。",
+      "view_all": "ギャラリーをすべて見る",
+      "badge": "製品プレビューライブラリ",
+      "back_to_home": "マーケティングサイトへ戻る"
+    },
     "video": {
       "first_text": "動画を見て",
       "second_text1": "",
@@ -73,7 +81,7 @@
     },
     "people_comment": {
       "title": "ユーザーのリアルな声",
-      "desc": "私たちの言うことだけを信じないでください。Saasflyについての実際のユーザーの声をご覧ください。"
+      "desc": "私たちの言うことだけを信じないでください。MyBizAIについての実際のユーザーの声をご覧ください。"
     }
   },
   "login": {
@@ -89,7 +97,7 @@
     "": ""
   },
   "common": {
-    "copyright": "著作権 © ${currentYear} Nextify株式会社。全ての権利を保有。",
+    "copyright": "著作権 © ${currentYear} MyBizAI。全ての権利を保有。",
     "dashboard": {
       "main_nav_documentation": "ドキュメンテーション",
       "main_nav_support": "サポート",

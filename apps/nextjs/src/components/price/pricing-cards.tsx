@@ -70,23 +70,23 @@ export function PricingCards({
         {pricingData.map(
           (offer: {
             title:
+            | boolean
+            | Key
+            | ReactElement<any, string | JSXElementConstructor<any>>
+            | Iterable<ReactNode>
+            | PromiseLikeOfReactNode
+            | null
+            | undefined;
+            prices: {
+              monthly:
+              | string
+              | number
               | boolean
-              | Key
               | ReactElement<any, string | JSXElementConstructor<any>>
               | Iterable<ReactNode>
               | PromiseLikeOfReactNode
               | null
               | undefined;
-            prices: {
-              monthly:
-                | string
-                | number
-                | boolean
-                | ReactElement<any, string | JSXElementConstructor<any>>
-                | Iterable<ReactNode>
-                | PromiseLikeOfReactNode
-                | null
-                | undefined;
               yearly: number;
             };
             benefits: any[];
@@ -184,9 +184,9 @@ export function PricingCards({
           Email{" "}
           <a
             className="font-medium text-primary hover:underline"
-            href="mailto:support@saasfly.io"
+            href="mailto:support@mybizai.com"
           >
-            support@saasfly.io
+            support@mybizai.com
           </a>{" "}
           {dict.contact}
           <br />

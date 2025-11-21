@@ -9,9 +9,9 @@ export function Questions() {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
-        <AccordionTrigger>About Saasfly</AccordionTrigger>
+        <AccordionTrigger>About MyBizAI</AccordionTrigger>
         <AccordionContent>
-          Nextify Limited’s team of experienced developers has invested years
+          MyBizAI's team of experienced developers has invested years
           into refining our software development methodologies. We’re proud to
           present our starter kit, a culmination of best practices and proven
           tools extracted from countless successful projects. This extensively

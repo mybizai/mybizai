@@ -3,17 +3,7 @@ import Link from "next/link";
 import Balancer from "react-wrap-balancer";
 
 import { formatDate } from "~/lib/utils";
-
-interface Post {
-  _id: string;
-  title: string;
-  description?: string;
-  date: string;
-  published: boolean;
-  image: string;
-  authors: string[];
-  slug: string;
-}
+import type { Post } from ".contentlayer/generated";
 
 interface BlogPostsProps {
   posts: Post[];

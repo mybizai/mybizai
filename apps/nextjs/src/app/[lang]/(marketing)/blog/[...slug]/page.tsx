@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { allAuthors, allPosts } from "contentlayer/generated";
+import { allAuthors, allPosts } from ".contentlayer/generated";
+import type { Author, Post } from ".contentlayer/generated";
 
 import { Mdx } from "~/components/content/mdx-components";
 
@@ -19,19 +20,19 @@ import { absoluteUrl, formatDate } from "~/lib/utils";
 
 interface PostPageProps {
   params: {
-    slug: string[];
+    slug?: string[];
   };
 }
 
-function getPostFromParams(params: { slug?: string | string[] }) {
-  const slug = Array.isArray(params.slug) ? params.slug.join("/") : params.slug;
-  const post = allPosts.find((post) => post.slugAsParams === slug);
-
-  if (!post) {
-    null;
+function getPostFromParams(
+  params: PostPageProps["params"],
+): Post | undefined {
+  if (!params.slug || params.slug.length === 0) {
+    return undefined;
   }
 
-  return post;
+  const slug = params.slug.join("/");
+  return allPosts.find((post) => post.slugAsParams === slug);
 }
 
 export function generateMetadata({ params }: PostPageProps): Metadata {
@@ -87,11 +88,14 @@ export default function PostPage({ params }: PostPageProps) {
 
   if (!post) {
     notFound();
+    return null;
   }
 
-  const authors = post.authors.map((author) =>
-    allAuthors.find(({ slug }) => slug === `/authors/${author}`),
-  );
+  const authors: Author[] = post.authors
+    .map((authorSlug) =>
+      allAuthors.find(({ slug }) => slug === `/authors/${authorSlug}`),
+    )
+    .filter((author): author is Author => Boolean(author));
 
   return (
     <article className="container relative max-w-3xl py-6 lg:py-10">
@@ -117,31 +121,29 @@ export default function PostPage({ params }: PostPageProps) {
         <h1 className="font-heading mt-2 inline-block text-4xl leading-tight lg:text-5xl">
           <Balancer>{post.title}</Balancer>
         </h1>
-        {authors?.length ? (
+        {authors.length ? (
           <div className="mt-4 flex space-x-4">
-            {authors.map((author) =>
-              author ? (
-                <Link
-                  key={author._id}
-                  href={`https://twitter.com/${author.twitter}`}
-                  className="flex items-center space-x-2 text-sm"
-                >
-                  <Image
-                    src={author.avatar}
-                    alt={author.title}
-                    width={42}
-                    height={42}
-                    className="rounded-full bg-white"
-                  />
-                  <div className="flex-1 text-left leading-tight">
-                    <p className="font-medium">{author.title}</p>
-                    <p className="text-[12px] text-muted-foreground">
-                      @{author.twitter}
-                    </p>
-                  </div>
-                </Link>
-              ) : null,
-            )}
+            {authors.map((author) => (
+              <Link
+                key={author._id}
+                href={`https://twitter.com/${author.twitter}`}
+                className="flex items-center space-x-2 text-sm"
+              >
+                <Image
+                  src={author.avatar}
+                  alt={author.title}
+                  width={42}
+                  height={42}
+                  className="rounded-full bg-white"
+                />
+                <div className="flex-1 text-left leading-tight">
+                  <p className="font-medium">{author.title}</p>
+                  <p className="text-[12px] text-muted-foreground">
+                    @{author.twitter}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
         ) : null}
       </div>

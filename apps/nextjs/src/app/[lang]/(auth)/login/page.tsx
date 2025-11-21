@@ -16,13 +16,16 @@ export const metadata: Metadata = {
   description: "Login to your account",
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function LoginPage({
-  params: { lang },
+  params,
 }: {
-  params: {
+  params: Promise<{
     lang: Locale;
-  };
+  }>;
 }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
@@ -40,13 +43,13 @@ export default async function LoginPage({
       </Link>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
-          <Image
+          {/* <Image
             src="/images/avatars/saasfly-logo.svg"
             className="mx-auto"
             width="64"
             height="64"
             alt=""
-          />
+          /> */}
           <h1 className="text-2xl font-semibold tracking-tight">
             {dict.login.welcome_back}
           </h1>

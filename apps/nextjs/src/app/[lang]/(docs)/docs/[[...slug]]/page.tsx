@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
-
 import { notFound } from "next/navigation";
 
 import { Mdx } from "~/components/content/mdx-components";
@@ -8,6 +6,7 @@ import { DocsPageHeader } from "~/components/docs/page-header";
 import { DocsPager } from "~/components/docs/pager";
 import { getTableOfContents } from "~/lib/toc";
 import { allDocs } from ".contentlayer/generated";
+import type { Doc } from ".contentlayer/generated";
 
 import "~/styles/mdx.css";
 
@@ -17,19 +16,16 @@ import { env } from "~/env.mjs";
 import { absoluteUrl } from "~/lib/utils";
 
 interface DocPageProps {
-  params: {
-    slug: string[];
-  };
+  params: DocPageParams;
 }
 
-function getDocFromParams(params: { slug: any }) {
-  const slug = params.slug?.join("/") || "";
-  const doc = allDocs.find((doc) => doc.slugAsParams === slug);
-  if (!doc) {
-    null;
-  }
+interface DocPageParams {
+  slug?: string[];
+}
 
-  return doc;
+function getDocFromParams(params: DocPageParams): Doc | undefined {
+  const slug = params.slug?.join("/") ?? "";
+  return allDocs.find((doc) => doc.slugAsParams === slug);
 }
 
 export function generateMetadata({ params }: DocPageProps): Metadata {
@@ -85,6 +81,7 @@ export default async function DocPage({ params }: DocPageProps) {
 
   if (!doc) {
     notFound();
+    return null;
   }
 
   const toc = await getTableOfContents(doc.body.raw);

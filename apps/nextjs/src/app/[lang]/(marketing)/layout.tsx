@@ -11,15 +11,16 @@ import { getDictionary } from "~/lib/get-dictionary";
 
 export default async function MarketingLayout({
   children,
-  params: { lang },
+  params,
 }: {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     lang: Locale;
-  };
+  }>;
 }) {
-  const dict = await getDictionary(lang);
+  const { lang } = await params;
   const user = await getCurrentUser();
+  const dict = await getDictionary(lang);
   return (
     <div className="flex min-h-screen flex-col">
       <Suspense fallback="...">

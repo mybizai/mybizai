@@ -8,17 +8,16 @@ import type { Locale } from "~/config/i18n-config";
 import { getMarketingConfig } from "~/config/ui/marketing";
 import { getDictionary } from "~/lib/get-dictionary";
 
-interface DocsLayoutProps {
-  children: React.ReactNode;
-  params: {
-    lang: Locale;
-  };
-}
-
 export default async function DocsLayout({
   children,
-  params: { lang },
-}: DocsLayoutProps) {
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{
+    lang: Locale;
+  }>;
+}) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const user = await getCurrentUser();
 
