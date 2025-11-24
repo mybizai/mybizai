@@ -1,34 +1,45 @@
 # TODO List
 
-This document outlines the actionable tasks for the future development of MyBizAI, based on the project roadmap and an analysis of the existing codebase.
+This document outlines a strategic and actionable roadmap for the future development of MyBizAI, based on a comprehensive analysis of the project's ambitious scope.
 
-## High Priority
+## High Priority: Core Functionality
 
-- **Implement AI Model Integration:**
-  - [ ] Create a dedicated API route for handling AI requests.
-  - [ ] Implement a flexible architecture that can accommodate different AI model providers.
-  - [ ] Add documentation and examples for integrating custom AI models.
+*   **Implement Core AI Features:**
+    *   [ ] Build the AI-powered brainstorming and idea generation tool.
+    *   [ ] Develop the collaborative business plan editor.
+    *   [ ] Implement the competitive analysis and market research visualization features.
+    *   [ ] Create the AI-assisted financial projections tool.
 
-- **Implement Usage-Based Billing:**
-  - [ ] Integrate with Stripe's usage-based billing APIs.
-  - [ ] Implement a system for tracking and reporting AI model usage.
-  - [ ] Create a UI for users to view and manage their AI model usage.
+*   **Build Project & Team Management:**
+    *   [ ] Develop the project tracking system with timelines and activity feeds.
+    *   [ ] Implement task delegation and management features.
+    *   [ ] Build the real-time collaboration editor and team communication hub.
 
-## Medium Priority
+*   **Finalize Subscription & Billing:**
+    *   [ ] Fully integrate Stripe for all subscription tiers (Standard, Pro, Business).
+    *   [ ] Build the user-facing billing and subscription management dashboard.
 
-- **Implement Admin Dashboard:**
-  - [ ] Design the UI for the admin dashboard.
-  - [ ] Develop the necessary API endpoints for managing users, subscriptions, and AI model usage.
-  - [ ] Implement the frontend of the admin dashboard.
+## Medium Priority: User Experience & Growth
 
-- **Implement Automated Testing:**
-  - [ ] Set up a testing framework (e.g., Vitest, Playwright).
-  - [ ] Write unit tests for the key components and utilities.
-  - [ ] Write end-to-end tests for the critical user flows (e.g., sign-up, subscription, AI model usage).
+*   **Onboarding & User Experience:**
+    *   [ ] Design and implement a guided onboarding flow to introduce users to the extensive feature set.
+    *   [ ] Develop the brand identity kit builder and personalization features.
+    *   [ ] Build the custom report generator.
 
-## Low Priority
+*   **Marketing & Community:**
+    *   [ ] Launch the public-facing blog and resource library.
+    *   [ ] Build the community forum.
+    *   [ ] Implement the referral program and track its effectiveness.
 
-- **Improve Documentation:**
-  - [ ] Add more detailed documentation for the individual packages.
-  - [ ] Create a "Getting Started" guide for new contributors.
-  - [ ] Add a "Deployment" guide for deploying to different platforms.
+## Low Priority: Long-Term & Foundational
+
+*   **Formalize Documentation:**
+    *   [ ] Create a centralized and searchable documentation site (e.g., using Nextra).
+    *   [ ] Write comprehensive guides for both users and developers.
+
+*   **Automated Testing:**
+    *   [ ] Implement a robust testing strategy, including unit, integration, and end-to-end tests.
+    *   [ ] Prioritize test coverage for critical features like payments and authentication.
+
+*   **Organize Mocks:**
+    *   [ ] Restructure the `mocks/` directory into logical subdirectories to improve navigability, as suggested in `IMPROVEMENT_SUGGESTIONS.md`.
