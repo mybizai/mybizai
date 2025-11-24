@@ -21,6 +21,34 @@ export type Account = {
   id_token: string | null;
   session_state: string | null;
 };
+export type BusinessPlan = {
+  id: string;
+  userId: string;
+  title: string;
+  content: unknown;
+  status: Generated<string>;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Timestamp;
+};
+export type BusinessProfile = {
+  id: string;
+  userId: string;
+  name: string;
+  industry: string;
+  website: string | null;
+  goals: string[];
+  growthPlan: unknown | null;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Timestamp;
+};
+export type ChatMessage = {
+  id: string;
+  role: string;
+  content: string;
+  agentId: string;
+  userId: string;
+  createdAt: Generated<Timestamp>;
+};
 export type Customer = {
   id: Generated<number>;
   authUserId: string;
@@ -51,6 +79,22 @@ export type Session = {
   userId: string;
   expires: Timestamp;
 };
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+  avatar: string | null;
+  status: Generated<string>;
+  type: Generated<string>;
+  specialty: string | null;
+  efficiency: Generated<number>;
+  tasksCompleted: Generated<number>;
+  currentProjects: string[];
+  userId: string;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Timestamp;
+};
 export type User = {
   id: Generated<string>;
   name: string | null;
@@ -65,9 +109,13 @@ export type VerificationToken = {
 };
 export type DB = {
   Account: Account;
+  BusinessPlan: BusinessPlan;
+  BusinessProfile: BusinessProfile;
+  ChatMessage: ChatMessage;
   Customer: Customer;
   K8sClusterConfig: K8sClusterConfig;
   Session: Session;
+  TeamMember: TeamMember;
   User: User;
   VerificationToken: VerificationToken;
 };

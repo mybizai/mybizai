@@ -20,17 +20,17 @@ export type SidebarNavItem = {
   title: string;
   disabled?: boolean;
   external?: boolean;
-  icon?: Lucide.LucideIcon;
+  icon?: Lucide.LucideIcon | string;
 } & (
-  | {
+    | {
       href: string;
       items?: never;
     }
-  | {
+    | {
       href?: string;
       items: NavLink[];
     }
-);
+  );
 
 export interface SiteConfig {
   name: string;

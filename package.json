@@ -36,6 +36,14 @@
   ],
   "packageManager": "bun@v1.1.10",
   "dependencies": {
-    "@clerk/nextjs": "^6.20.0"
+    "@clerk/nextjs": "^6.20.0",
+    "@tiptap/extension-placeholder": "^3.11.0",
+    "@tiptap/pm": "^3.11.0",
+    "@tiptap/react": "^3.11.0",
+    "@tiptap/starter-kit": "^3.11.0",
+    "@types/lodash.debounce": "^4.0.9",
+    "lodash.debounce": "^4.0.8",
+    "nextjs": "^0.0.3",
+    "react-to-print": "^3.2.0"
   }
 }

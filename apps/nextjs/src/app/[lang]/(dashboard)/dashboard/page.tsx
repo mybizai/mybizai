@@ -13,6 +13,9 @@ export const metadata = {
   title: "Dashboard",
 };
 
+import { db } from "@saasfly/db";
+import { auth } from "@clerk/nextjs/server";
+
 export default async function DashboardPage({
   params,
 }: {
@@ -21,10 +24,17 @@ export default async function DashboardPage({
   }>;
 }) {
   const { lang } = await params;
-  // const user = await getCurrentUser();
-  // if (!user) {
-  //   redirect(authOptions?.pages?.signIn ?? "/login-clerk");
-  // }
+
+  let userId = (await auth()).userId;
+  if (!userId) {
+    userId = "user_mock_dev";
+  }
+
+  const profile = await db.selectFrom("BusinessProfile")
+    .selectAll()
+    .select("growthPlan")
+    .where("userId", "=", userId)
+    .executeTakeFirst();
 
   const dict = await getDictionary(lang);
 
@@ -34,7 +44,7 @@ export default async function DashboardPage({
         heading="MyBizAI Command Center"
         text="Monitor and manage your autonomous business empire."
       />
-      <AgentDashboard />
+      <AgentDashboard initialProfile={profile} />
     </DashboardShell>
   );
 }

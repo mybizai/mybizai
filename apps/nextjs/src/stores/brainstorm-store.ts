@@ -66,28 +66,76 @@ export const useBrainstormStore = create<BrainstormState>((set, get) => ({
             isTyping: true,
         }));
 
-        // Get AI response
-        const { message: aiMessage, updatedIdea } = await aiService.sendMessage(
-            session.messages,
-            content
-        );
+        // Call Real API
+        const response = await fetch("/api/ai/brainstorm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                messages: [...get().session!.messages, userMessage],
+                context: get().session!.idea
+            }),
+        });
 
-        // Update state with AI response and any idea updates
+        if (!response.ok) {
+            throw new Error("Failed to get AI response");
+        }
+
+        const data = await response.json();
+        const aiContent = data.content;
+        const updates = data.updates;
+
+        // Simulate streaming for UI effect (optional, since we are not streaming from API yet)
+        // We can just add the message directly for now, or keep the streaming effect locally
+        // Let's keep the local streaming effect for better UX
+
+        const aiMessageId = uuidv4();
+        const aiMessage: Message = {
+            id: aiMessageId,
+            role: "ai",
+            content: "", // Start empty
+            timestamp: Date.now(),
+        };
+
+        set((state) => ({
+            session: state.session ? {
+                ...state.session,
+                messages: [...state.session.messages, aiMessage]
+            } : null,
+            isTyping: true
+        }));
+
+        // Stream the content locally
+        let currentContent = "";
+        const words = aiContent.split(" ");
+
+        for (const word of words) {
+            currentContent += word + " ";
+            set((state) => ({
+                session: state.session ? {
+                    ...state.session,
+                    messages: state.session.messages.map(m =>
+                        m.id === aiMessageId ? { ...m, content: currentContent } : m
+                    )
+                } : null
+            }));
+            await new Promise(resolve => setTimeout(resolve, 50)); // Fast local stream
+        }
+
         set((state) => {
             if (!state.session) return {};
 
+            // Apply updates if any
             let newIdea = state.session.idea;
-            if (updatedIdea) {
-                newIdea = { ...newIdea, ...updatedIdea, updatedAt: Date.now() };
+            if (updates && Object.keys(updates).length > 0) {
+                newIdea = { ...newIdea, ...updates, updatedAt: Date.now() };
             }
 
             return {
                 session: {
                     ...state.session,
+                    messages: [...state.session.messages], // Messages already added via local stream
                     idea: newIdea,
-                    messages: [...state.session.messages, aiMessage],
                 },
-                isTyping: false,
             };
         });
     },

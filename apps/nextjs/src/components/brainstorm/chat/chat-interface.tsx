@@ -4,6 +4,8 @@ import * as React from "react";
 import { useBrainstormStore } from "~/stores/brainstorm-store";
 import { ScrollArea, Button, Textarea, Avatar, AvatarFallback, AvatarImage, cn } from "@saasfly/ui";
 import { Send } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export function ChatInterface() {
     const { session, isTyping, sendMessage, initSession } = useBrainstormStore();
@@ -20,7 +22,7 @@ export function ChatInterface() {
     // Auto-scroll to bottom
     React.useEffect(() => {
         if (scrollRef.current) {
-            scrollRef.current.scrollIntoView({ behavior: "smooth" });
+            scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
         }
     }, [session?.messages, isTyping]);
 
@@ -46,7 +48,7 @@ export function ChatInterface() {
         <div className="flex h-full flex-col">
             {/* Messages Area */}
             <ScrollArea className="flex-1 p-4">
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 pb-4">
                     {session.messages.map((msg) => (
                         <div
                             key={msg.id}
@@ -55,7 +57,7 @@ export function ChatInterface() {
                                 msg.role === "user" ? "flex-row-reverse" : "flex-row"
                             )}
                         >
-                            <Avatar className="h-8 w-8">
+                            <Avatar className="h-8 w-8 shrink-0">
                                 {msg.role === "ai" ? (
                                     <AvatarImage src="/images/ai-avatar.png" />
                                 ) : (
@@ -72,7 +74,11 @@ export function ChatInterface() {
                                         : "bg-muted text-foreground"
                                 )}
                             >
-                                <div className="whitespace-pre-wrap">{msg.content}</div>
+                                <div className="prose prose-sm dark:prose-invert max-w-none break-words">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                        {msg.content}
+                                    </ReactMarkdown>
+                                </div>
 
                                 {/* Suggestions Chips */}
                                 {msg.suggestions && msg.suggestions.length > 0 && (
@@ -96,7 +102,7 @@ export function ChatInterface() {
 
                     {isTyping && (
                         <div className="flex w-full gap-2">
-                            <Avatar className="h-8 w-8">
+                            <Avatar className="h-8 w-8 shrink-0">
                                 <AvatarFallback>AI</AvatarFallback>
                             </Avatar>
                             <div className="flex items-center gap-1 rounded-lg bg-muted px-4 py-2">

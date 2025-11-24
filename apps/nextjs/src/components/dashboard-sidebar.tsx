@@ -62,16 +62,27 @@ const iconMapObj = new Map<string, React.ComponentType<{ className?: string }>>(
 interface DashboardSidebarProps {
     isCollapsed: boolean;
     toggleCollapse: () => void;
+    items: SidebarNavItem[];
 }
 
 export function DashboardSidebar({
     isCollapsed,
     toggleCollapse,
+    items,
 }: DashboardSidebarProps) {
     const path = usePathname();
-    const mockCategories = getMockNavigation();
+    // Group items by category if needed, or just render flat list if that's what we have
+    // The reference project had groups (Navigation, Tools, etc.), but our dashboard.ts is a flat list.
+    // We can infer groups or just render a single group for now.
+    // For now, let's render a single group "Navigation" for the flat list, 
+    // or we can try to group them based on comments/structure if we had that metadata.
+    // Since dashboard.ts is flat, we'll render them directly.
+
+    // However, the existing code expects categories. Let's adapt.
+    // We'll create a single "Menu" category for now to keep it simple and working.
+
     const [expandedCategories, setExpandedCategories] = React.useState<Set<string>>(
-        new Set(["core", "ai_agents", "projects"])
+        new Set(["menu"])
     );
 
     const toggleCategory = (categoryId: string) => {
@@ -108,59 +119,34 @@ export function DashboardSidebar({
 
             <ScrollArea className="flex-1 py-4">
                 <nav className="grid gap-1 px-2">
-                    {mockCategories.map((category) => {
-                        const Icon = iconMapObj.get(category.icon) ?? Lucide.Home;
-                        const isExpanded = expandedCategories.has(category.id);
+                    <div className="space-y-1">
+                        {!isCollapsed && (
+                            <h4 className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                Menu
+                            </h4>
+                        )}
+                        {items.map((item) => {
+                            const isActive = path === item.href || path.startsWith(item.href + "/");
 
-                        return (
-                            <div key={category.id} className="space-y-1">
-                                <Button
-                                    variant="ghost"
-                                    onClick={() => toggleCategory(category.id)}
+                            return (
+                                <Link
+                                    key={item.id}
+                                    href={item.href || "#"}
                                     className={cn(
-                                        "w-full justify-start gap-3 px-3 py-2 text-sm font-medium",
+                                        "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                                        isActive
+                                            ? "bg-mybiz-purple/10 text-mybiz-purple"
+                                            : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
                                         isCollapsed && "justify-center px-2"
                                     )}
+                                    title={isCollapsed ? item.title : undefined}
                                 >
-                                    <Icon className="h-4 w-4 shrink-0" />
-                                    {!isCollapsed && (
-                                        <>
-                                            <span className="flex-1 text-left">{category.title}</span>
-                                            <ChevronDown
-                                                className={cn(
-                                                    "h-4 w-4 transition-transform",
-                                                    isExpanded && "rotate-180"
-                                                )}
-                                            />
-                                        </>
-                                    )}
-                                </Button>
-
-                                {!isCollapsed && isExpanded && (
-                                    <div className="ml-6 space-y-1 border-l border-border pl-3">
-                                        {category.items.map((item) => {
-                                            const isActive = path === item.href || path.startsWith(item.href + "/");
-
-                                            return (
-                                                <Link
-                                                    key={item.id}
-                                                    href={item.href}
-                                                    className={cn(
-                                                        "block rounded-md px-3 py-1.5 text-sm transition-colors",
-                                                        isActive
-                                                            ? "bg-mybiz-purple/10 text-mybiz-purple font-medium"
-                                                            : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                                                    )}
-                                                >
-                                                    {item.title}
-                                                </Link>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-                            </div>
-                        );
-                    })}
+                                    {!isCollapsed && <span>{item.title}</span>}
+                                    {isCollapsed && <span className="text-xs font-bold">{item.title.substring(0, 2)}</span>}
+                                </Link>
+                            );
+                        })}
+                    </div>
                 </nav>
             </ScrollArea>
 

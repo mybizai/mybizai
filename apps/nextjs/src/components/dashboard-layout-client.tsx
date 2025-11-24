@@ -3,11 +3,17 @@
 import * as React from "react";
 import { DashboardSidebar } from "~/components/dashboard-sidebar";
 
+import { type SidebarNavItem } from "~/types";
+
 interface DashboardLayoutClientProps {
     children: React.ReactNode;
+    sidebarItems: SidebarNavItem[];
+    params: {
+        lang: string;
+    };
 }
 
-export function DashboardLayoutClient({ children }: DashboardLayoutClientProps) {
+export function DashboardLayoutClient({ children, sidebarItems }: DashboardLayoutClientProps) {
     const [isCollapsed, setIsCollapsed] = React.useState(false);
 
     return (
@@ -15,6 +21,7 @@ export function DashboardLayoutClient({ children }: DashboardLayoutClientProps) 
             <DashboardSidebar
                 isCollapsed={isCollapsed}
                 toggleCollapse={() => setIsCollapsed(!isCollapsed)}
+                items={sidebarItems}
             />
             <main className="flex w-full flex-1 flex-col overflow-hidden">
                 {children}

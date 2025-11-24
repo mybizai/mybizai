@@ -111,6 +111,9 @@ export const middleware = clerkMiddleware(async (auth, req: NextRequest) => {
     return null;
   }
   if (!isAuth) {
+    if (isNoRedirect(req)) {
+      return NextResponse.next();
+    }
     let from = req.nextUrl.pathname;
     if (req.nextUrl.search) {
       from += req.nextUrl.search;

@@ -5,7 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@saasfly/ui/card";
 import { Activity, Bot, CheckCircle, DollarSign, TrendingUp } from "lucide-react";
 import { cn } from "@saasfly/ui";
 
-export function AgentDashboard() {
+interface AgentDashboardProps {
+    initialProfile?: {
+        name: string;
+        industry: string;
+        goals: string[];
+        growthPlan?: any;
+    } | null;
+}
+
+export function AgentDashboard({ initialProfile }: AgentDashboardProps) {
+    const growthPlan = initialProfile?.growthPlan;
+
     return (
         <div className="space-y-8">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -15,9 +26,9 @@ export function AgentDashboard() {
                         <DollarSign className="h-4 w-4 text-mybiz-purple" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">$45,231.89</div>
+                        <div className="text-2xl font-bold">$0.00</div>
                         <p className="text-xs text-muted-foreground">
-                            +20.1% from last month
+                            +0% from last month
                         </p>
                     </CardContent>
                 </Card>
@@ -27,9 +38,9 @@ export function AgentDashboard() {
                         <Bot className="h-4 w-4 text-mybiz-green" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">+12</div>
+                        <div className="text-2xl font-bold">0</div>
                         <p className="text-xs text-muted-foreground">
-                            +3 new agents deployed
+                            0 new agents deployed
                         </p>
                     </CardContent>
                 </Card>
@@ -39,9 +50,9 @@ export function AgentDashboard() {
                         <CheckCircle className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">+2350</div>
+                        <div className="text-2xl font-bold">0</div>
                         <p className="text-xs text-muted-foreground">
-                            +180 since last hour
+                            +0 since last hour
                         </p>
                     </CardContent>
                 </Card>
@@ -51,7 +62,7 @@ export function AgentDashboard() {
                         <Activity className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">99.9%</div>
+                        <div className="text-2xl font-bold">100%</div>
                         <p className="text-xs text-muted-foreground">
                             All systems operational
                         </p>
@@ -62,13 +73,45 @@ export function AgentDashboard() {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                 <Card className="col-span-4">
                     <CardHeader>
-                        <CardTitle>Overview</CardTitle>
+                        <CardTitle>Business Overview</CardTitle>
                     </CardHeader>
                     <CardContent className="pl-2">
-                        {/* Placeholder for a chart */}
-                        <div className="h-[200px] w-full rounded-md bg-muted/20 flex items-center justify-center text-muted-foreground">
-                            Chart Placeholder
-                        </div>
+                        {initialProfile ? (
+                            <div className="space-y-6 p-4">
+                                <div>
+                                    <h3 className="text-lg font-semibold">{initialProfile.name}</h3>
+                                    <p className="text-sm text-muted-foreground">{initialProfile.industry}</p>
+                                </div>
+
+                                {growthPlan && (
+                                    <div className="rounded-lg bg-primary/5 p-4 border border-primary/10">
+                                        <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
+                                            <TrendingUp className="h-4 w-4 text-primary" />
+                                            Active Growth Strategy
+                                        </h4>
+                                        <p className="text-sm font-semibold text-primary mb-1">
+                                            {growthPlan.executiveBrief?.title || "Custom Growth Plan"}
+                                        </p>
+                                        <p className="text-xs text-muted-foreground line-clamp-2">
+                                            {growthPlan.executiveBrief?.summary}
+                                        </p>
+                                    </div>
+                                )}
+
+                                <div>
+                                    <h4 className="text-sm font-medium mb-2">Current Goals</h4>
+                                    <ul className="list-disc list-inside text-sm space-y-1">
+                                        {initialProfile.goals.map((goal, i) => (
+                                            <li key={i}>{goal}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="h-[200px] w-full rounded-md bg-muted/20 flex items-center justify-center text-muted-foreground">
+                                No business profile found. Please complete onboarding.
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
                 <Card className="col-span-3">

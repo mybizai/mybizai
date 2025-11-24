@@ -3,8 +3,18 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "~/*": [
+        "./src/*"
+      ],
+      "@saasfly/ui": [
+        "../../packages/ui/src/index.ts"
+      ],
+      "@saasfly/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "contentlayer/generated": [
+        "./.contentlayer/generated"
+      ]
     },
     "plugins": [
       {
@@ -22,5 +32,7 @@
     "src",
     "contentlayer.config.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

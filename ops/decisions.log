@@ -1,0 +1,5 @@
+# Decisions Log
+
+| Date | Decision | Context | Rationale | Status |
+|------|----------|---------|-----------|--------|
+| 2025-11-22 | Create Log Files | User rules require logging | Compliance with user rules | Accepted |
