@@ -1,27 +1,20 @@
 import { BusinessIdea, Message } from "~/types/brainstorm";
 
 export class MiniMaxService {
-    async generateResponse(messages: Message[], context?: BusinessIdea) {
-        let baseUrl = process.env.MiniMax_M2_BASE_URL;
-        let apiKey = process.env.MiniMax_M2_CODE_PLAN_API_KEY;
-        const model = process.env.MiniMax_M2_MODEL || "minimax-m2";
+  async generateResponse(messages: Message[], context?: BusinessIdea) {
+    const { MiniMax_M2_BASE_URL: baseUrl, MiniMax_M2_CODE_PLAN_API_KEY: apiKey, MiniMax_M2_MODEL: model = "minimax-m2" } = process.env;
 
-        if (!baseUrl || !apiKey) {
-            console.warn("MiniMax API keys not found in process.env");
-        }
+    if (!baseUrl || !apiKey) {
+      console.warn("MiniMax API keys not found in process.env");
+      throw new Error("MiniMax API keys not configured");
+    }
 
-        if (!baseUrl || !apiKey) {
-            throw new Error("MiniMax API keys not configured");
-        }
+    const llmMessages = messages.map(({ role, content }) => ({
+      role: role === "ai" ? "assistant" : "user",
+      content,
+    }));
 
-        // Convert internal messages to LLM format
-        const llmMessages = messages.map((m) => ({
-            role: m.role === "ai" ? "assistant" : "user",
-            content: m.content,
-        }));
-
-        // Add system prompt with context
-        const systemPrompt = `You are an expert AI Co-founder for a business builder platform called MyBizAI.
+    const systemPrompt = `You are an expert AI Co-founder for a business builder platform called MyBizAI.
     Your goal is to help the user brainstorm and refine their business idea.
     
     Current Idea Context:
@@ -45,93 +38,38 @@ export class MiniMaxService {
       }
     }`;
 
-        // Use OpenAI-compatible endpoint
-        // If BASE_URL ends with /anthropic, strip it to use /v1
-        const openAiBaseUrl = baseUrl.replace('/anthropic', '');
+    const openAiBaseUrl = baseUrl.replace('/anthropic', '');
 
-        const response = await fetch(`${openAiBaseUrl}/v1/chat/completions`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-                model: model,
-                messages: [
-                    { role: "system", content: systemPrompt },
-                    ...llmMessages
-                ],
-                stream: false,
-                // Enable reasoning split for MiniMax-M2
-                reasoning_split: true
-            }),
-        });
+    const response = await fetch(`${openAiBaseUrl}/v1/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [{ role: "system", content: systemPrompt }, ...llmMessages],
+        stream: false,
+        reasoning_split: true,
+      }),
+    });
 
-        if (!response.ok) {
-            const error = await response.text();
-            console.error(`[${new Date().toISOString()}] MiniMax Error: ${response.status} ${response.statusText} - ${error}\n`);
-            throw new Error(`MiniMax API Error: ${error}`);
-        }
-
-        const data = await response.json();
-        // Log success
-        // Log success
-        console.log(`[${new Date().toISOString()}] MiniMax Success: ${JSON.stringify(data)}\n`);
-
-        // Handle MiniMax/Anthropic response structure
-        if (data.content && Array.isArray(data.content)) {
-            const textBlock = data.content.find((c: any) => c.type === 'text');
-            if (textBlock) {
-                return textBlock.text;
-            }
-        }
-
-        // Fallback to choices if available (standard OpenAI format)
-        if (data.choices && data.choices.length > 0) {
-            return data.choices[0].message.content;
-        }
-
-        throw new Error("Unexpected response format from MiniMax API");
+    if (!response.ok) {
+      const error = await response.text();
+      console.error(`[${new Date().toISOString()}] MiniMax Error: ${response.status} ${response.statusText} - ${error}\n`);
+      throw new Error(`MiniMax API Error: ${error}`);
     }
-    async chat(messages: { role: string; content: string }[]) {
-        let baseUrl = process.env.MiniMax_M2_BASE_URL;
-        let apiKey = process.env.MiniMax_M2_CODE_PLAN_API_KEY;
-        const model = process.env.MiniMax_M2_MODEL || "minimax-m2";
 
-        if (!baseUrl || !apiKey) {
-            throw new Error("MiniMax API keys not configured");
-        }
+    const data = await response.json();
+    console.log(`[${new Date().toISOString()}] MiniMax Success: ${JSON.stringify(data)}\n`);
 
-        // Ensure base URL is correct for OpenAI compatible endpoint
-        const openAiBaseUrl = baseUrl.replace('/anthropic', '');
-
-        const response = await fetch(`${openAiBaseUrl}/v1/chat/completions`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-                model: model,
-                messages: messages,
-                stream: false,
-            }),
-        });
-
-        if (!response.ok) {
-            const error = await response.text();
-            console.error(`[${new Date().toISOString()}] MiniMax Chat Error: ${response.status} ${response.statusText} - ${error}\n`);
-            throw new Error(`MiniMax API Error: ${error}`);
-        }
-
-        const data = await response.json();
-
-        if (data.choices && data.choices.length > 0) {
-            return data.choices[0].message.content;
-        }
-
-        throw new Error("Unexpected response format from MiniMax API");
+    const content = data.choices?.[0]?.message?.content;
+    if (typeof content === "string") {
+      return content;
     }
+
+    throw new Error("Unexpected response format from MiniMax API");
+  }
 }
 
 export const minimaxService = new MiniMaxService();
