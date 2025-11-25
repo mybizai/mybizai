@@ -5,7 +5,7 @@ export type Generated<T> =
     : ColumnType<T, T | undefined, T>;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
-import type { SubscriptionPlan, Status } from "./enums";
+import type { SubscriptionPlan } from "./enums";
 
 export type Account = {
   id: Generated<string>;
@@ -61,18 +61,6 @@ export type Customer = {
   createdAt: Generated<Timestamp>;
   updatedAt: Generated<Timestamp>;
 };
-export type K8sClusterConfig = {
-  id: Generated<number>;
-  name: string;
-  location: string;
-  authUserId: string;
-  plan: Generated<SubscriptionPlan | null>;
-  network: string | null;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
-  status: Generated<Status | null>;
-  delete: Generated<boolean | null>;
-};
 export type Session = {
   id: Generated<string>;
   sessionToken: string;
@@ -113,7 +101,6 @@ export type DB = {
   BusinessProfile: BusinessProfile;
   ChatMessage: ChatMessage;
   Customer: Customer;
-  K8sClusterConfig: K8sClusterConfig;
   Session: Session;
   TeamMember: TeamMember;
   User: User;
