@@ -6,6 +6,8 @@
     ".": "./src/index.ts",
     "./resend": "./src/email.ts",
     "./MagicLinkEmail": "./src/emails/magic-link-email.tsx",
+    "./InviteEmail": "./src/emails/invite-email.tsx",
+    "./sendInviteEmail": "./src/emails/send-invite.ts",
     "./subscriptions": "./src/subscriptions.ts",
     "./env": "./src/env.mjs"
   },
