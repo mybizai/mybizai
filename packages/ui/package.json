@@ -12,7 +12,9 @@
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check '**/*.{ts,tsx}' ",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@radix-ui/react-accessible-icon": "next",
@@ -63,27 +65,42 @@
   "devDependencies": {
     "@saasfly/eslint-config": "workspace:*",
     "@saasfly/prettier-config": "workspace:*",
-    "@saasfly/typescript-config": "workspace:*",
     "@saasfly/tailwind-config": "workspace:*",
-    "@types/react": "18.3.3",
+    "@saasfly/typescript-config": "workspace:*",
+    "@storybook/addon-a11y": "^8.6.14",
+    "@storybook/addon-docs": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/addon-links": "^8.6.14",
+    "@storybook/addon-onboarding": "^8.6.14",
+    "@storybook/builder-vite": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
     "@tanstack/react-table": "8.17.0",
+    "@types/react": "18.3.3",
+    "@vitest/browser-playwright": "^4.0.14",
+    "@vitest/coverage-v8": "^4.0.14",
     "date-fns": "3.3.1",
     "eslint": "8.57.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "playwright": "^1.57.0",
     "prettier": "3.2.5",
     "react": "18.3.1",
     "react-day-picker": "8.10.0",
     "react-dom": "18.3.1",
     "react-hook-form": "7.50.1",
+    "storybook": "^8.6.14",
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "1.0.7",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "vitest": "^4.0.14"
   },
   "prettier": "@saasfly/prettier-config",
   "eslintConfig": {
     "root": true,
     "extends": [
       "@saasfly/eslint-config/base",
-      "@saasfly/eslint-config/react"
+      "@saasfly/eslint-config/react",
+      "plugin:storybook/recommended"
     ]
   },
   "exports": {
