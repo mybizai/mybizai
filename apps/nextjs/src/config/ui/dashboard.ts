@@ -49,6 +49,12 @@ export const getDashboardConfig = async ({
         icon: "Users",
       },
       {
+        id: "team-members",
+        title: "Team Members",
+        href: "/dashboard/team-members",
+        icon: "Users",
+      },
+      {
         id: "brand-identity",
         title: "Brand Identity",
         href: "/dashboard/brand-identity",

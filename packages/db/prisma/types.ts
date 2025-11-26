@@ -37,6 +37,7 @@ export type BusinessProfile = {
   industry: string;
   website: string | null;
   goals: string[];
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   growthPlan: unknown | null;
   createdAt: Generated<Timestamp>;
   updatedAt: Timestamp;
@@ -73,11 +74,41 @@ export type K8sClusterConfig = {
   status: Generated<Status | null>;
   delete: Generated<boolean | null>;
 };
+export type Project = {
+  id: string;
+  name: string;
+  description: string | null;
+  status: Generated<string>;
+  startDate: Timestamp;
+  endDate: Timestamp | null;
+  teamId: string;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Timestamp;
+};
 export type Session = {
   id: Generated<string>;
   sessionToken: string;
   userId: string;
   expires: Timestamp;
+};
+export type Task = {
+  id: string;
+  name: string;
+  description: string | null;
+  status: Generated<string>;
+  priority: Generated<string>;
+  dueDate: Timestamp | null;
+  projectId: string;
+  assigneeId: string | null;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Timestamp;
+};
+export type Team = {
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Timestamp;
 };
 export type TeamMember = {
   id: string;
@@ -94,6 +125,12 @@ export type TeamMember = {
   userId: string;
   createdAt: Generated<Timestamp>;
   updatedAt: Timestamp;
+};
+export type TeamMemberOnTeam = {
+  teamId: string;
+  teamMemberId: string;
+  assignedAt: Generated<Timestamp>;
+  assignedBy: string;
 };
 export type User = {
   id: Generated<string>;
@@ -114,8 +151,12 @@ export type DB = {
   ChatMessage: ChatMessage;
   Customer: Customer;
   K8sClusterConfig: K8sClusterConfig;
+  Project: Project;
   Session: Session;
+  Task: Task;
+  Team: Team;
   TeamMember: TeamMember;
+  TeamMemberOnTeam: TeamMemberOnTeam;
   User: User;
   VerificationToken: VerificationToken;
 };
