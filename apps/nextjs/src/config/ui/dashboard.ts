@@ -14,6 +14,10 @@ export const getDashboardConfig = async ({
   return {
     mainNav: [
       {
+        title: "Brainstorm",
+        href: "/brainstorm",
+      },
+      {
         title: dict.common.dashboard.main_nav_documentation,
         href: "/docs",
       },

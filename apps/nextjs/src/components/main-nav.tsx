@@ -48,7 +48,7 @@ export function MainNav({ items, children, params: { lang }, marketing }: MainNa
         <span className="font-bold">Menu</span>
       </button>
       {showMobileMenu && items && (
-        <MobileNav items={items} menuItemClick={handleMenuItemClick}>
+        <MobileNav items={items} menuItemClick={handleMenuItemClick} params={{ lang }}>
           {children}
         </MobileNav>
       )}
