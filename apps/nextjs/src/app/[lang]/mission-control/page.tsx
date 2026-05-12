@@ -1,3 +1,4 @@
+import { MissionCommerceLayer } from "~/components/mission-control/commerce-layer";
 import { MissionGovernanceLayer } from "~/components/mission-control/governance-layer";
 import { MissionOperationalLayer } from "~/components/mission-control/production-layer";
 import { MissionWorkflowDetailLayer } from "~/components/mission-control/workflow-detail-layer";
@@ -18,6 +19,7 @@ export default async function MissionControlPage({
         <MissionOperationalLayer lang={lang} />
         <MissionWorkflowDetailLayer lang={lang} />
         <MissionGovernanceLayer lang={lang} />
+        <MissionCommerceLayer lang={lang} />
         <div className="mt-12">
           <CommerceStrip lang={lang} />
         </div>
