@@ -1,3 +1,4 @@
+import { MissionAgentLayer } from "~/components/mission-control/agent-layer";
 import { MissionArtifactsLayer } from "~/components/mission-control/artifacts-layer";
 import { MissionCommerceLayer } from "~/components/mission-control/commerce-layer";
 import { MissionGovernanceLayer } from "~/components/mission-control/governance-layer";
@@ -21,6 +22,7 @@ export default async function MissionControlPage({
         <MissionHero lang={lang} />
         <MissionNavigationLayer lang={lang} />
         <MissionOperationalLayer lang={lang} />
+        <MissionAgentLayer lang={lang} />
         <MissionWorkflowDetailLayer lang={lang} />
         <MissionGovernanceLayer lang={lang} />
         <MissionCommerceLayer lang={lang} />
