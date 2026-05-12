@@ -1,3 +1,4 @@
+import { MissionArtifactsLayer } from "~/components/mission-control/artifacts-layer";
 import { MissionCommerceLayer } from "~/components/mission-control/commerce-layer";
 import { MissionGovernanceLayer } from "~/components/mission-control/governance-layer";
 import { MissionObservabilityLayer } from "~/components/mission-control/observability-layer";
@@ -22,6 +23,7 @@ export default async function MissionControlPage({
         <MissionGovernanceLayer lang={lang} />
         <MissionCommerceLayer lang={lang} />
         <MissionObservabilityLayer lang={lang} />
+        <MissionArtifactsLayer lang={lang} />
         <div className="mt-12">
           <CommerceStrip lang={lang} />
         </div>
