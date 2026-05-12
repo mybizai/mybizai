@@ -1,3 +1,4 @@
+import { MissionGovernanceLayer } from "~/components/mission-control/governance-layer";
 import { MissionOperationalLayer } from "~/components/mission-control/production-layer";
 import { MissionWorkflowDetailLayer } from "~/components/mission-control/workflow-detail-layer";
 import { CommerceStrip, MissionControlNav, MissionHero, ScreenGrid } from "~/components/mission-control/static-shell";
@@ -16,6 +17,7 @@ export default async function MissionControlPage({
         <MissionHero lang={lang} />
         <MissionOperationalLayer lang={lang} />
         <MissionWorkflowDetailLayer lang={lang} />
+        <MissionGovernanceLayer lang={lang} />
         <div className="mt-12">
           <CommerceStrip lang={lang} />
         </div>
