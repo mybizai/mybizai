@@ -1,4 +1,5 @@
 import { MissionOperationalLayer } from "~/components/mission-control/production-layer";
+import { MissionWorkflowDetailLayer } from "~/components/mission-control/workflow-detail-layer";
 import { CommerceStrip, MissionControlNav, MissionHero, ScreenGrid } from "~/components/mission-control/static-shell";
 
 export default async function MissionControlPage({
@@ -14,6 +15,7 @@ export default async function MissionControlPage({
       <section className="mx-auto max-w-7xl px-6 py-10">
         <MissionHero lang={lang} />
         <MissionOperationalLayer lang={lang} />
+        <MissionWorkflowDetailLayer lang={lang} />
         <div className="mt-12">
           <CommerceStrip lang={lang} />
         </div>
