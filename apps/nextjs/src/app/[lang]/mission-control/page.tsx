@@ -3,6 +3,7 @@ import { MissionArtifactsLayer } from "~/components/mission-control/artifacts-la
 import { MissionBatchProductionLayers } from "~/components/mission-control/batch-production-layers";
 import { MissionBatchProductionLayersTwo } from "~/components/mission-control/batch-production-layers-2";
 import { MissionBatchProductionLayersThree } from "~/components/mission-control/batch-production-layers-3";
+import { MissionBatchProductionLayersFour } from "~/components/mission-control/batch-production-layers-4";
 import { MissionCommerceLayer } from "~/components/mission-control/commerce-layer";
 import { MissionGovernanceLayer } from "~/components/mission-control/governance-layer";
 import { MissionNavigationLayer } from "~/components/mission-control/navigation-layer";
@@ -36,6 +37,7 @@ export default async function MissionControlPage({
         <MissionBatchProductionLayers lang={lang} />
         <MissionBatchProductionLayersTwo lang={lang} />
         <MissionBatchProductionLayersThree lang={lang} />
+        <MissionBatchProductionLayersFour lang={lang} />
         <div className="mt-12">
           <CommerceStrip lang={lang} />
         </div>
