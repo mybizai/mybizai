@@ -4,6 +4,7 @@ import { MissionBatchProductionLayers } from "~/components/mission-control/batch
 import { MissionBatchProductionLayersTwo } from "~/components/mission-control/batch-production-layers-2";
 import { MissionBatchProductionLayersThree } from "~/components/mission-control/batch-production-layers-3";
 import { MissionBatchProductionLayersFour } from "~/components/mission-control/batch-production-layers-4";
+import { MissionBatchProductionLayersFive } from "~/components/mission-control/batch-production-layers-5";
 import { MissionCommerceLayer } from "~/components/mission-control/commerce-layer";
 import { MissionGovernanceLayer } from "~/components/mission-control/governance-layer";
 import { MissionNavigationLayer } from "~/components/mission-control/navigation-layer";
@@ -38,6 +39,7 @@ export default async function MissionControlPage({
         <MissionBatchProductionLayersTwo lang={lang} />
         <MissionBatchProductionLayersThree lang={lang} />
         <MissionBatchProductionLayersFour lang={lang} />
+        <MissionBatchProductionLayersFive lang={lang} />
         <div className="mt-12">
           <CommerceStrip lang={lang} />
         </div>
