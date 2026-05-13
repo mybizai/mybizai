@@ -1,17 +1,17 @@
-import { MissionAgentLayer } from "~/components/mission-control/agent-layer";
-import { MissionArtifactsLayer } from "~/components/mission-control/artifacts-layer";
-import { MissionBatchProductionLayers } from "~/components/mission-control/batch-production-layers";
-import { MissionBatchProductionLayersTwo } from "~/components/mission-control/batch-production-layers-2";
-import { MissionBatchProductionLayersThree } from "~/components/mission-control/batch-production-layers-3";
-import { MissionBatchProductionLayersFour } from "~/components/mission-control/batch-production-layers-4";
-import { MissionCommerceLayer } from "~/components/mission-control/commerce-layer";
-import { MissionGovernanceLayer } from "~/components/mission-control/governance-layer";
-import { MissionNavigationLayer } from "~/components/mission-control/navigation-layer";
-import { MissionObservabilityLayer } from "~/components/mission-control/observability-layer";
-import { MissionOperationalLayer } from "~/components/mission-control/production-layer";
-import { MissionTeamBuilderLayer } from "~/components/mission-control/team-builder-layer";
-import { MissionWorkflowDetailLayer } from "~/components/mission-control/workflow-detail-layer";
-import { CommerceStrip, MissionControlNav, MissionHero, ScreenGrid } from "~/components/mission-control/static-shell";
+import Link from "next/link";
+import {
+  MissionControlNav,
+  MissionHero,
+  CommerceStrip,
+  ScreenGrid
+} from "~/components/mission-control/static-shell";
+import { ProjectManagementSection } from "~/components/mission-control/project-management";
+import { TeamOperationsSection } from "~/components/mission-control/team-operations";
+import { LiveOperationsSection } from "~/components/mission-control/live-operations";
+import { GovernanceComplianceSection } from "~/components/mission-control/governance-compliance";
+import { ObservabilityOpsSection } from "~/components/mission-control/observability-ops";
+import { WorkspaceAdminSection } from "~/components/mission-control/workspace-admin";
+import { CommerceOpsSection } from "~/components/mission-control/commerce-ops";
 
 export default async function MissionControlPage({
   params,
@@ -20,28 +20,54 @@ export default async function MissionControlPage({
 }) {
   const { lang } = await params;
 
+  const functionalAreas = [
+    { title: "Project Management", id: "project", Component: ProjectManagementSection, href: "/project" },
+    { title: "Team Operations", id: "team", Component: TeamOperationsSection, href: "/team" },
+    { title: "Live Operations", id: "live", Component: LiveOperationsSection, href: "/live-ops" },
+    { title: "Governance & Audit", id: "governance", Component: GovernanceComplianceSection, href: "/governance-audit" },
+    { title: "Commerce Ops", id: "commerce", Component: CommerceOpsSection, href: "/commerce" },
+    { title: "Observability & Ops", id: "ops", Component: ObservabilityOpsSection, href: "/ops" },
+    { title: "Workspace & Admin", id: "admin", Component: WorkspaceAdminSection, href: "/admin" },
+  ];
+
   return (
     <main className="min-h-screen bg-black text-white">
       <MissionControlNav lang={lang} />
-      <section className="mx-auto max-w-7xl px-6 py-10">
+      <section className="mx-auto max-w-7xl px-6 py-10 space-y-16">
         <MissionHero lang={lang} />
-        <MissionNavigationLayer lang={lang} />
-        <MissionOperationalLayer lang={lang} />
-        <MissionAgentLayer lang={lang} />
-        <MissionTeamBuilderLayer lang={lang} />
-        <MissionWorkflowDetailLayer lang={lang} />
-        <MissionGovernanceLayer lang={lang} />
-        <MissionCommerceLayer lang={lang} />
-        <MissionObservabilityLayer lang={lang} />
-        <MissionArtifactsLayer lang={lang} />
-        <MissionBatchProductionLayers lang={lang} />
-        <MissionBatchProductionLayersTwo lang={lang} />
-        <MissionBatchProductionLayersThree lang={lang} />
-        <MissionBatchProductionLayersFour lang={lang} />
-        <div className="mt-12">
+
+        <div className="grid gap-12 lg:grid-cols-2">
+          {functionalAreas.map(({ title, id, Component, href }) => (
+            <div key={id} className="space-y-6">
+              <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
+                <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+                <Link
+                  href={`/${lang}/mission-control${href}`}
+                  className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition"
+                >
+                  Enter Surface →
+                </Link>
+              </div>
+              <div className="opacity-80 hover:opacity-100 transition-opacity">
+                <Component lang={lang} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-8 border-t border-zinc-800 pt-16">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-3xl font-bold tracking-tight">Commerce Workflow</h2>
+            <p className="text-zinc-400 max-w-2xl">Production-ready commerce routes reserved for pricing, subscription, and billing management.</p>
+          </div>
           <CommerceStrip lang={lang} />
         </div>
-        <div className="mt-10">
+
+        <div className="space-y-8 border-t border-zinc-800 pt-16">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-3xl font-bold tracking-tight">Mission Screen Roster</h2>
+            <p className="text-zinc-400 max-w-2xl">Direct access to all 22 mock-driven functional screens in the Mission Control sequence.</p>
+          </div>
           <ScreenGrid lang={lang} />
         </div>
       </section>

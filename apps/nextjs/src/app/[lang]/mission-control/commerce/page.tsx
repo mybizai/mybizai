@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-import { MissionCommerceLayer } from "~/components/mission-control/commerce-layer";
+import { CommerceOpsSection } from "~/components/mission-control/commerce-ops";
 import { MissionControlNav } from "~/components/mission-control/static-shell";
 
 export default async function MissionCommercePage({
@@ -14,7 +13,7 @@ export default async function MissionCommercePage({
     <main className="min-h-screen bg-black text-white">
       <MissionControlNav lang={lang} />
       <section className="mx-auto max-w-7xl px-6 py-10">
-        <MissionCommerceLayer lang={lang} />
+        <CommerceOpsSection lang={lang} />
         <div className="mt-8">
           <Link href={`/${lang}/mission-control`} className="inline-flex rounded-2xl border border-blue-400/30 bg-blue-500/10 px-5 py-3 text-sm font-semibold text-blue-100 transition hover:bg-blue-500/20">Back to Mission Control</Link>
         </div>

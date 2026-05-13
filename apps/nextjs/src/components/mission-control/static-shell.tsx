@@ -1,22 +1,14 @@
 import Link from "next/link";
-
 import { commerceRoutes, missionControlScreens, type MissionControlScreen } from "~/data/mission-control";
-
-function StatusPill({ children }: { children: string }) {
-  return <span className="rounded-full border border-purple-400/40 bg-purple-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-purple-200">{children}</span>;
-}
-
-function PanelCard({ label }: { label: string }) {
-  return <div className="rounded-2xl border border-zinc-800 bg-black px-4 py-3 text-sm text-zinc-300">{label}</div>;
-}
+import { StatusPill, PanelCard } from "./ui-primitives";
 
 export function MissionControlNav({ lang = "en" }: { lang?: string }) {
   const navItems = [
     { href: `/${lang}/mission-control`, label: "Overview" },
     { href: `/${lang}/mission-control/project-selection`, label: "Start" },
-    { href: `/${lang}/mission-control/agent-conversation-hub`, label: "Live Hub" },
-    { href: `/${lang}/mission-control/performance-dashboard-1`, label: "Ops" },
-    { href: `/${lang}/mission-control/decision-audit-trail-1`, label: "Audit" },
+    { href: `/${lang}/mission-control/live-ops`, label: "Live Ops" },
+    { href: `/${lang}/mission-control/ops`, label: "Ops" },
+    { href: `/${lang}/mission-control/governance-audit`, label: "Audit" },
   ];
 
   return (
@@ -47,7 +39,7 @@ export function MissionHero({ lang = "en" }: { lang?: string }) {
             <div className="text-3xl font-semibold text-white">Start</div>
             <div className="mt-1 uppercase tracking-[0.25em] text-blue-200">Project flow</div>
           </Link>
-          <Link href={`/${lang}/mission-control/agent-conversation-hub`} className="rounded-2xl border border-purple-400/40 bg-purple-500/10 p-5 text-sm text-purple-100 transition hover:bg-purple-500/20">
+          <Link href={`/${lang}/mission-control/live-ops`} className="rounded-2xl border border-purple-400/40 bg-purple-500/10 p-5 text-sm text-purple-100 transition hover:bg-purple-500/20">
             <div className="text-3xl font-semibold text-white">Live</div>
             <div className="mt-1 uppercase tracking-[0.25em] text-purple-200">Agent hub</div>
           </Link>

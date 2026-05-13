@@ -1,9 +1,8 @@
 import Link from "next/link";
-
-import { MissionAgentLayer } from "~/components/mission-control/agent-layer";
+import { LiveOperationsSection } from "~/components/mission-control/live-operations";
 import { MissionControlNav } from "~/components/mission-control/static-shell";
 
-export default async function MissionAgentsPage({
+export default async function MissionLivePage({
   params,
 }: {
   params: Promise<{ lang: string }>;
@@ -14,7 +13,7 @@ export default async function MissionAgentsPage({
     <main className="min-h-screen bg-black text-white">
       <MissionControlNav lang={lang} />
       <section className="mx-auto max-w-7xl px-6 py-10">
-        <MissionAgentLayer lang={lang} />
+        <LiveOperationsSection lang={lang} />
         <div className="mt-8">
           <Link href={`/${lang}/mission-control`} className="inline-flex rounded-2xl border border-blue-400/30 bg-blue-500/10 px-5 py-3 text-sm font-semibold text-blue-100 transition hover:bg-blue-500/20">Back to Mission Control</Link>
         </div>
