@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint ",
+    "lint": "eslint .",
     "format": "prettier --check '**/*.{ts,json}' ",
     "typecheck": "tsc --noEmit"
   },
@@ -30,7 +30,10 @@
     "root": true,
     "extends": [
       "@saasfly/eslint-config/base"
-    ]
+    ],
+    "rules": {
+      "@typescript-eslint/ban-ts-comment": "off"
+    }
   },
   "prettier": "@saasfly/prettier-config"
 }

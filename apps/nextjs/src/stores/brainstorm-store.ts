@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { BrainstormSession, BusinessIdea, Message } from '~/types/brainstorm';
+import { BrainstormSession, BusinessIdea } from '~/types/brainstorm';
 import { aiService } from '~/services/mock/ai-service';
 import { v4 as uuidv4 } from 'uuid';
+import { Message } from '@saasfly/common';
 
 interface BrainstormState {
     session: BrainstormSession | null;
@@ -21,7 +22,6 @@ export const useBrainstormStore = create<BrainstormState>((set, get) => ({
     initSession: async (preferences) => {
         set({ isTyping: true });
 
-        // Create initial empty idea with preferences
         const initialIdea: BusinessIdea = {
             id: uuidv4(),
             title: "Untitled Idea",
@@ -50,7 +50,6 @@ export const useBrainstormStore = create<BrainstormState>((set, get) => ({
         const { session } = get();
         if (!session) return;
 
-        // Add user message
         const userMessage: Message = {
             id: uuidv4(),
             role: 'user',
@@ -66,78 +65,45 @@ export const useBrainstormStore = create<BrainstormState>((set, get) => ({
             isTyping: true,
         }));
 
-        // Call Real API
-        const response = await fetch("/api/ai/brainstorm", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                messages: [...get().session!.messages, userMessage],
-                context: get().session!.idea
-            }),
-        });
+        try {
+            const response = await fetch("/api/ai/brainstorm", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    messages: get().session!.messages,
+                    context: get().session!.idea,
+                }),
+            });
 
-        if (!response.ok) {
-            throw new Error("Failed to get AI response");
-        }
-
-        const data = await response.json();
-        const aiContent = data.content;
-        const updates = data.updates;
-
-        // Simulate streaming for UI effect (optional, since we are not streaming from API yet)
-        // We can just add the message directly for now, or keep the streaming effect locally
-        // Let's keep the local streaming effect for better UX
-
-        const aiMessageId = uuidv4();
-        const aiMessage: Message = {
-            id: aiMessageId,
-            role: "ai",
-            content: "", // Start empty
-            timestamp: Date.now(),
-        };
-
-        set((state) => ({
-            session: state.session ? {
-                ...state.session,
-                messages: [...state.session.messages, aiMessage]
-            } : null,
-            isTyping: true
-        }));
-
-        // Stream the content locally
-        let currentContent = "";
-        const words = aiContent.split(" ");
-
-        for (const word of words) {
-            currentContent += word + " ";
-            set((state) => ({
-                session: state.session ? {
-                    ...state.session,
-                    messages: state.session.messages.map(m =>
-                        m.id === aiMessageId ? { ...m, content: currentContent } : m
-                    )
-                } : null
-            }));
-            await new Promise(resolve => setTimeout(resolve, 50)); // Fast local stream
-        }
-
-        set((state) => {
-            if (!state.session) return {};
-
-            // Apply updates if any
-            let newIdea = state.session.idea;
-            if (updates && Object.keys(updates).length > 0) {
-                newIdea = { ...newIdea, ...updates, updatedAt: Date.now() };
+            if (!response.ok) {
+                throw new Error("Failed to get AI response");
             }
 
-            return {
-                session: {
-                    ...state.session,
-                    messages: [...state.session.messages], // Messages already added via local stream
-                    idea: newIdea,
-                },
+            const { content: aiContent, updates } = await response.json();
+
+            const aiMessage: Message = {
+                id: uuidv4(),
+                role: "ai",
+                content: aiContent,
+                timestamp: Date.now(),
             };
-        });
+
+            set((state) => {
+                if (!state.session) return {};
+                const newIdea = updates ? { ...state.session.idea, ...updates, updatedAt: Date.now() } : state.session.idea;
+                return {
+                    session: {
+                        ...state.session,
+                        messages: [...state.session.messages, aiMessage],
+                        idea: newIdea,
+                    },
+                    isTyping: false,
+                };
+            });
+        } catch (error) {
+            console.error("Brainstorm send message error:", error);
+            set({ isTyping: false });
+        }
     },
 
     updateIdea: (updates: Partial<BusinessIdea>) => {

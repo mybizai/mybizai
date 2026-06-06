@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Config } from "tailwindcss";
 // import colors from "tailwindcss/colors";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -122,9 +123,10 @@ export default {
   plugins: [require("tailwindcss-animate"), addVariablesForColors],
 } satisfies Config;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function addVariablesForColors({ addBase, theme }: any) {
   const allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
+  const newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
   );
 

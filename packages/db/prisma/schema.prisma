@@ -150,6 +150,8 @@ model TeamMember {
   updatedAt       DateTime @updatedAt
 
   messages        ChatMessage[]
+  teams           TeamMemberOnTeam[]
+  tasks           Task[]
 
   @@index([userId])
 }
@@ -166,4 +168,54 @@ model ChatMessage {
 
   @@index([agentId])
   @@index([userId])
+}
+
+model Team {
+  id        String    @id @default(cuid())
+  name      String
+  userId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  members   TeamMemberOnTeam[]
+  projects  Project[]
+}
+
+model TeamMemberOnTeam {
+  team       Team       @relation(fields: [teamId], references: [id])
+  teamId     String
+  teamMember TeamMember @relation(fields: [teamMemberId], references: [id])
+  teamMemberId String
+  assignedAt DateTime   @default(now())
+  assignedBy String
+
+  @@id([teamId, teamMemberId])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  status      String   @default("active")
+  startDate   DateTime
+  endDate     DateTime?
+  teamId      String
+  team        Team     @relation(fields: [teamId], references: [id])
+  tasks       Task[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  status      String    @default("todo")
+  priority    String    @default("medium")
+  dueDate     DateTime?
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id])
+  assigneeId  String?
+  assignee    TeamMember? @relation(fields: [assigneeId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
